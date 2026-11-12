@@ -1,0 +1,25 @@
+{
+  "name": "pw-erotas",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Aulas de automacao WEB com Playwright e JavaScript",
+  "scripts": {
+    "test": "playwright test",
+    "test:chromium": "playwright test --project=chromium",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:smoke": "playwright test --grep @smoke",
+    "report": "playwright show-report",
+    "typecheck": "tsc --project jsconfig.json --noEmit",
+    "browsers:install": "playwright install",
+    "codegen": "playwright codegen"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.0",
+    "@types/node": "^26.6.6",
+    "dotenv": "^18.0.10",
+    "typescript": "^7.0.2"
+  },
+  "type": "module"
+}

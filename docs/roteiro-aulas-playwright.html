@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>roteiro-aulas-playwright.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> or <div class="page"></div> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="roteiro-de-aulas--automação-web-com-playwright">Roteiro de aulas — automação WEB com Playwright</h1>
+<p>Este roteiro orienta a demonstração do instrutor e a prática da turma, desde baixar o projeto até revisar e aprovar um pull request no GitHub. O projeto usa JavaScript, Page Objects e GitHub Actions.</p>
+<p>Aplicação das aulas: https://projeto-entra21.web.app/.</p>
+<h2 id="1-o-que-a-turma-vai-aprender">1. O que a turma vai aprender</h2>
+<p>Ao final, cada participante deverá conseguir:</p>
+<ul>
+<li>Clonar um repositório, instalar dependências e trabalhar em uma branch.</li>
+<li>Explorar o site e transformar comportamentos em cenários com resultado esperado.</li>
+<li>Identificar elementos com DevTools, Playwright Inspector e Codegen.</li>
+<li>Criar uma classe de página com <code>constructor</code>, localizadores, ações e validações.</li>
+<li>Escrever e executar testes <code>.spec.js</code>, analisar falhas e consultar relatórios.</li>
+<li>Enviar alterações ao GitHub, abrir pull request, solicitar revisão e corrigir comentários.</li>
+<li>Diferenciar teste aprovado na execução, aprovação do revisor e autorização para merge.</li>
+</ul>
+<p>Sugestão de divisão: quatro encontros de aproximadamente duas horas. Ajuste o tempo à experiência da turma.</p>
+<table>
+<thead>
+<tr>
+<th>Encontro</th>
+<th>Conteúdo</th>
+<th>Entrega prática</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>GitHub, instalação, demonstração do site e leitura do projeto</td>
+<td>Executar os testes existentes</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Elementos, localizadores, Inspector e Page Objects</td>
+<td>Identificar elementos e organizar a página</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Criar cenários, executar e investigar falhas</td>
+<td>Implementar um cenário com asserção</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Commit, pull request, CI, revisão e aprovação</td>
+<td>PR revisado com testes aprovados</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-preparação-do-instrutor">2. Preparação do instrutor</h2>
+<ol>
+<li>Publicar o projeto em um repositório do GitHub e compartilhar a URL com a turma.</li>
+<li>Informar o nome da branch padrão. Os comandos deste roteiro usam <code>main</code>; substituir se necessário.</li>
+<li>Garantir que os participantes tenham permissão para criar branches e PRs. Como alternativa, usar forks.</li>
+<li>Definir os pares: uma pessoa implementa e outra revisa; depois inverter os papéis.</li>
+<li>Confirmar que o site e as contas de aula estão disponíveis.</li>
+<li>Preparar registros próprios para exercícios que alterem dados. Não modificar pedidos de colegas.</li>
+<li>Se a aprovação precisar bloquear o merge, configurar a proteção da branch conforme a seção 15.</li>
+</ol>
+<p>As senhas das contas didáticas estão em <code>Helpers/environment.js</code>, conforme a configuração da turma. Não copiar os valores para exemplos, descrições de PR ou capturas de relatório.</p>
+<h2 id="3-baixar-o-projeto-do-github">3. Baixar o projeto do GitHub</h2>
+<p>Instalar previamente Git, Node.js 24 e VS Code. Ter uma conta no GitHub e aceitar o convite ao repositório, quando houver.</p>
+<p>No terminal do VS Code ou no PowerShell:</p>
+<pre class="hljs"><code><div>git <span class="hljs-literal">--version</span>
+node <span class="hljs-literal">--version</span>
+npm <span class="hljs-literal">--version</span>
+</div></code></pre>
+<p>No GitHub, abrir o repositório, clicar <strong>Code → HTTPS</strong> e copiar a URL. Substituir <code>ORGANIZACAO</code> e <code>REPOSITORIO</code> abaixo pelos valores reais:</p>
+<pre class="hljs"><code><div>git clone https://github.com/ORGANIZACAO/REPOSITORIO.git
+<span class="hljs-built_in">cd</span> REPOSITORIO
+code .
+</div></code></pre>
+<p>No VS Code, abrir <strong>Terminal → New Terminal</strong>. Conferir se o terminal está na pasta que contém <code>package.json</code>.</p>
+<pre class="hljs"><code><div>npm ci
+npm run browsers:install
+npm run typecheck
+npm run test:chromium
+</div></code></pre>
+<p>Resultado esperado: dependências e navegadores instalados, verificação do JavaScript aprovada e testes do Chromium executados. Atualmente existem dois cenários WEB; nos três navegadores são seis execuções.</p>
+<p>O projeto usa a URL de <code>Helpers/environment.js</code>. Não é necessário criar <code>.env</code> para começar. Instalar também a extensão <strong>Playwright Test for VS Code</strong>, da Microsoft, recomendada pelo projeto.</p>
+<p><strong>Conferência do instrutor:</strong> cada participante deve localizar um teste aprovado no terminal antes de continuar.</p>
+<h2 id="4-demonstração-do-site">4. Demonstração do site</h2>
+<p>Primeiro executar o fluxo manualmente. Pedir à turma que descreva o que espera ver antes de clicar.</p>
+<h3 id="parte-pública">Parte pública</h3>
+<ol>
+<li>Abrir a URL das aulas e observar o redirecionamento para <code>/auth/login</code>.</li>
+<li>Identificar Email, Senha, controle de visibilidade, Lembrar-me e Login.</li>
+<li>Enviar o login vazio e observar as mensagens dos campos obrigatórios.</li>
+<li>Abrir <strong>Crie uma conta</strong> e identificar Nome, Sobrenome, Celular, Email e Senha. Não registrar conta durante esta demonstração.</li>
+<li>Voltar ao login e abrir <strong>Esqueceu a senha?</strong>. Mostrar o campo Email sem enviar uma recuperação.</li>
+<li>Abrir <strong>Rastrear encomenda</strong> e identificar o campo de código e o botão Rastrear.</li>
+</ol>
+<h3 id="parte-autenticada">Parte autenticada</h3>
+<p>Usar uma sessão separada para cada perfil ou encerrar a sessão anterior antes de trocar de conta.</p>
+<table>
+<thead>
+<tr>
+<th>Perfil</th>
+<th>Demonstrar</th>
+<th>Pergunta para a turma</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Usuário</td>
+<td>Painel, Meus Pedidos, filtros e Conta</td>
+<td>Como comprovar que aparecem somente os pedidos permitidos?</td>
+</tr>
+<tr>
+<td>Motorista</td>
+<td>Painel, Minhas Entregas, situações e Conta</td>
+<td>Como preparar entregas atribuídas a motoristas diferentes?</td>
+</tr>
+<tr>
+<td>Administrador</td>
+<td>Painel, menus Usuários e Pedidos, Novo Pedido e Conta</td>
+<td>Qual a diferença entre esconder um menu e bloquear acesso?</td>
+</tr>
+</tbody>
+</table>
+<p>Mostrar a URL e os estados de carregamento. Quantidades de pedidos podem variar em ambiente compartilhado. Os campos do formulário de Novo Pedido e a tela administrativa de Usuários ainda precisam de exploração adicional; não apresentar regras desses fluxos como confirmadas.</p>
+<p>Abrir <a href="mapeamento-testes-web.md">mapeamento-testes-web.md</a> e explicar prioridade, pré-condição, passos e resultado esperado. Os 96 cenários documentados são um plano de cobertura, não 96 testes já automatizados.</p>
+<h2 id="5-apresentar-a-estrutura-do-projeto">5. Apresentar a estrutura do projeto</h2>
+<table>
+<thead>
+<tr>
+<th>Arquivo ou pasta</th>
+<th>O que ensinar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Helpers/environment.js</code></td>
+<td>URL e contas utilizadas nas aulas</td>
+</tr>
+<tr>
+<td><code>page/Login/LoginPage.js</code></td>
+<td>Classe de página, construtor, localizadores, ações e validações</td>
+</tr>
+<tr>
+<td><code>tests/Login/login.spec.js</code></td>
+<td>Cenários que instanciam a página e chamam métodos</td>
+</tr>
+<tr>
+<td><code>playwright.config.js</code></td>
+<td>Navegadores, URL base, timeouts, evidências e retries no CI</td>
+</tr>
+<tr>
+<td><code>package.json</code></td>
+<td>Dependências e atalhos <code>npm run</code></td>
+</tr>
+<tr>
+<td><code>package-lock.json</code></td>
+<td>Versões reproduzíveis instaladas com <code>npm ci</code></td>
+</tr>
+<tr>
+<td><code>jsconfig.json</code></td>
+<td>Verificação de JavaScript e tipos declarados em JSDoc</td>
+</tr>
+<tr>
+<td><code>.gitignore</code></td>
+<td>Arquivos locais e gerados que não entram no commit</td>
+</tr>
+<tr>
+<td><code>.github/workflows/playwright.yml</code></td>
+<td>Execução automática e agendamento</td>
+</tr>
+<tr>
+<td><code>docs/</code></td>
+<td>Material das aulas e plano de testes</td>
+</tr>
+</tbody>
+</table>
+<p>Explicar <code>import</code>, <code>export</code>, <code>class</code>, <code>constructor</code>, <code>this</code>, <code>async</code> e <code>await</code> usando o código existente. Uma ação assíncrona precisa ser aguardada antes da próxima etapa.</p>
+<h2 id="6-criar-a-branch-do-exercício">6. Criar a branch do exercício</h2>
+<p>Começar com o trabalho local salvo e a branch padrão atualizada:</p>
+<pre class="hljs"><code><div>git <span class="hljs-keyword">switch</span> main
+git pull <span class="hljs-literal">--ff-only</span> origin main
+git <span class="hljs-keyword">switch</span> <span class="hljs-literal">-c</span> teste/seu<span class="hljs-literal">-nome-login-obrigatorio</span>
+</div></code></pre>
+<p>Cada participante usa um nome de branch próprio. Em forks, criar a branch no fork e abrir o PR para o repositório combinado com o instrutor.</p>
+<h2 id="7-como-buscar-informações-dos-elementos">7. Como buscar informações dos elementos</h2>
+<h3 id="pelo-navegador-devtools">Pelo navegador: DevTools</h3>
+<ol>
+<li>Abrir a tela de login no Chrome ou Edge.</li>
+<li>Pressionar <strong>F12</strong> ou clicar com o botão direito no campo e escolher <strong>Inspecionar</strong>.</li>
+<li>Usar o seletor de elementos do DevTools (<code>Ctrl+Shift+C</code>) e apontar para o campo Email.</li>
+<li>Observar a tag, <code>type</code>, <code>name</code>, <code>id</code>, <code>placeholder</code> e sua associação com o <code>label</code>.</li>
+<li>Repetir com Senha, Login e as mensagens de erro após enviar o formulário vazio.</li>
+<li>Verificar o nome acessível no painel de acessibilidade: o texto usado para localizar um controle pode vir de um rótulo ou <code>aria-label</code>, não apenas do conteúdo HTML.</li>
+</ol>
+<p>Não copiar IDs gerados automaticamente ou caminhos CSS longos sem avaliar estabilidade. O input de senha normalmente não possui papel <code>textbox</code>; usar o rótulo quando disponível.</p>
+<h3 id="pelo-playwright-inspector-e-codegen">Pelo Playwright Inspector e Codegen</h3>
+<pre class="hljs"><code><div>npm run codegen <span class="hljs-literal">--</span> https://projeto<span class="hljs-literal">-entra21</span>.web.app/
+</div></code></pre>
+<ol>
+<li>Identificar as duas janelas: navegador de interação e Inspector.</li>
+<li>Usar <strong>Pick locator</strong> para apontar para um elemento e conferir o localizador sugerido.</li>
+<li>Digitar um email de exemplo e clicar no botão Login para observar ações geradas.</li>
+<li>Conferir se o localizador identifica apenas o elemento desejado.</li>
+<li>Copiar o localizador para o construtor do Page Object.</li>
+<li>Encerrar as janelas ao terminar. O gravador ajuda a descobrir ações; o teste ainda precisa de intenção clara e asserções.</li>
+</ol>
+<p>Para depurar um teste existente:</p>
+<pre class="hljs"><code><div>npx playwright test tests/Login/login.spec.js <span class="hljs-literal">--project</span>=chromium <span class="hljs-literal">--debug</span>
+</div></code></pre>
+<p>Usar execução passo a passo, observar a linha atual e conferir o elemento realçado. No VS Code, a extensão também oferece seleção de localizadores e depuração. <a href="https://playwright.dev/docs/debug">Referências: Inspector</a> e <a href="https://playwright.dev/docs/codegen">Codegen</a>.</p>
+<h3 id="escolher-o-localizador">Escolher o localizador</h3>
+<table>
+<thead>
+<tr>
+<th>Necessidade</th>
+<th>Exemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Botão pelo papel e nome</td>
+<td><code>page.getByRole('button', { name: 'Login', exact: true })</code></td>
+</tr>
+<tr>
+<td>Campo pelo rótulo</td>
+<td><code>page.getByLabel('Senha', { exact: true })</code></td>
+</tr>
+<tr>
+<td>Campo pelo papel e nome</td>
+<td><code>page.getByRole('textbox', { name: 'Email', exact: true })</code></td>
+</tr>
+<tr>
+<td>Mensagem de validação</td>
+<td><code>page.getByText('O email é obrigatório', { exact: true })</code></td>
+</tr>
+<tr>
+<td>Identificador de teste, quando existir no site</td>
+<td><code>page.getByTestId('identificador-confirmado-na-tela')</code></td>
+</tr>
+</tbody>
+</table>
+<p>Priorizar significado e estabilidade. <code>getByTestId</code> só funciona se o atributo correspondente existir; não inventar identificadores. Se houver mais de um resultado, restringir ao formulário ou região correta em vez de adicionar <code>.first()</code> sem entender a duplicidade.</p>
+<h2 id="8-definir-o-primeiro-cenário-da-aula">8. Definir o primeiro cenário da aula</h2>
+<p>Exercício baseado no LOG-03 do mapeamento:</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Definição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Objetivo</td>
+<td>Validar campos obrigatórios do login</td>
+</tr>
+<tr>
+<td>Pré-condição</td>
+<td>Tela de login aberta e sem sessão</td>
+</tr>
+<tr>
+<td>Dados</td>
+<td>Email e senha vazios</td>
+</tr>
+<tr>
+<td>Ação</td>
+<td>Clicar Login</td>
+</tr>
+<tr>
+<td>Resultado esperado</td>
+<td>Exibir “O email é obrigatório” e “A senha é obrigatória”</td>
+</tr>
+</tbody>
+</table>
+<p>Perguntar: um teste que apenas clica Login comprova esse resultado? A turma deve identificar que é necessário verificar as mensagens com <code>expect</code>.</p>
+<h2 id="9-implementar-o-page-object">9. Implementar o Page Object</h2>
+<p>Abrir <code>page/Login/LoginPage.js</code>. O construtor já recebe <code>page</code> e guarda os localizadores em <code>this</code>. Acrescentar <strong>dentro do construtor</strong>, após os localizadores existentes:</p>
+<pre class="hljs"><code><div><span class="hljs-variable language_">this</span>.<span class="hljs-property">emailRequiredMessage</span> = page.<span class="hljs-title function_">getByText</span>(<span class="hljs-string">&#x27;O email é obrigatório&#x27;</span>, { <span class="hljs-attr">exact</span>: <span class="hljs-literal">true</span> });
+<span class="hljs-variable language_">this</span>.<span class="hljs-property">passwordRequiredMessage</span> = page.<span class="hljs-title function_">getByText</span>(<span class="hljs-string">&#x27;A senha é obrigatória&#x27;</span>, { <span class="hljs-attr">exact</span>: <span class="hljs-literal">true</span> });
+</div></code></pre>
+<p>Acrescentar o método abaixo <strong>dentro da classe</strong>, fora do construtor, antes da última chave:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">async</span> <span class="hljs-title function_">expectRequiredMessages</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">expect</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">emailRequiredMessage</span>).<span class="hljs-title function_">toBeVisible</span>();
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">expect</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">passwordRequiredMessage</span>).<span class="hljs-title function_">toBeVisible</span>();
+}
+</div></code></pre>
+<p>O <code>expect</code> já está importado no arquivo. Reutilizar <code>open()</code> e <code>submit()</code> existentes. Explicar a divisão: construtor identifica os elementos; métodos executam ações ou validam estados; o teste descreve a sequência do cenário.</p>
+<h2 id="10-criar-o-teste-chamando-a-página">10. Criar o teste chamando a página</h2>
+<p>Em <code>tests/Login/login.spec.js</code>, adicionar este cenário <strong>dentro do <code>test.describe</code> existente</strong>. Os imports de <code>test</code> e <code>LoginPage</code> já estão no arquivo:</p>
+<pre class="hljs"><code><div><span class="hljs-title function_">test</span>(<span class="hljs-string">&#x27;LOG-03 | valida os campos obrigatórios do login @smoke&#x27;</span>, <span class="hljs-title function_">async</span> ({ page }) =&gt; {
+  <span class="hljs-keyword">const</span> loginPage = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LoginPage</span>(page);
+
+  <span class="hljs-keyword">await</span> loginPage.<span class="hljs-title function_">open</span>();
+  <span class="hljs-keyword">await</span> loginPage.<span class="hljs-title function_">submit</span>();
+  <span class="hljs-keyword">await</span> loginPage.<span class="hljs-title function_">expectRequiredMessages</span>();
+});
+</div></code></pre>
+<p>Executar somente o novo cenário:</p>
+<pre class="hljs"><code><div>npx playwright test tests/Login/login.spec.js <span class="hljs-literal">--project</span>=chromium <span class="hljs-literal">--grep</span> <span class="hljs-string">&quot;LOG-03&quot;</span>
+</div></code></pre>
+<p>Resultado esperado: um teste aprovado. Se aparecer “No tests found”, conferir pasta, extensão <code>.spec.js</code>, título e filtro.</p>
+<p>Este é um exercício para a turma implementar; os métodos e o terceiro cenário mostrados nesta seção não são adicionados automaticamente ao código por este documento.</p>
+<h2 id="11-executar-e-analisar">11. Executar e analisar</h2>
+<pre class="hljs"><code><div>npm run typecheck
+npm run test:chromium
+npm test
+npm run report
+</div></code></pre>
+<p>Após implementar o exercício, serão três cenários e nove execuções nos três navegadores, se todos forem incluídos sem filtros ou exclusões.</p>
+<p>Para acompanhar visualmente ou depurar:</p>
+<pre class="hljs"><code><div>npx playwright test tests/Login/login.spec.js <span class="hljs-literal">--project</span>=chromium <span class="hljs-literal">--headed</span>
+npx playwright test tests/Login/login.spec.js <span class="hljs-literal">--project</span>=chromium <span class="hljs-literal">--grep</span> <span class="hljs-string">&quot;LOG-03&quot;</span> <span class="hljs-literal">--debug</span>
+npm run test:ui
+</div></code></pre>
+<p>No relatório, abrir o teste, conferir passos e comparar resultado esperado com recebido. Em falhas, examinar screenshot, vídeo e trace quando disponíveis. O projeto preserva essas evidências em falhas.</p>
+<p>Para demonstrar uma falha de forma controlada, alterar temporariamente o texto esperado para um texto inexistente, executar apenas LOG-03 e mostrar a mensagem de erro. Restaurar o texto correto antes de validar e fazer commit.</p>
+<p>Não resolver falha adicionando <code>waitForTimeout</code>, removendo <code>expect</code> ou aumentando timeouts sem investigar. As asserções do Playwright aguardam o estado esperado. Distinguir erro do teste, defeito do site, massa de dados e indisponibilidade do ambiente. Um retry que passa deve motivar análise de instabilidade.</p>
+<h2 id="12-enviar-as-alterações-ao-github">12. Enviar as alterações ao GitHub</h2>
+<p>Conferir primeiro os arquivos alterados:</p>
+<pre class="hljs"><code><div>git status
+git <span class="hljs-built_in">diff</span>
+</div></code></pre>
+<p>Adicionar somente os arquivos do exercício e criar o commit:</p>
+<pre class="hljs"><code><div>git add page/Login/LoginPage.js tests/Login/login.spec.js
+git <span class="hljs-built_in">diff</span> <span class="hljs-literal">--cached</span>
+git commit <span class="hljs-literal">-m</span> <span class="hljs-string">&quot;test: valida campos obrigatorios do login&quot;</span>
+git push <span class="hljs-literal">-u</span> origin teste/seu<span class="hljs-literal">-nome-login-obrigatorio</span>
+</div></code></pre>
+<p>O GitHub pode solicitar autenticação pelo gerenciador de credenciais ou navegador. Não colocar token ou senha no comando. Não enviar <code>.env</code>, <code>node_modules</code>, relatórios e evidências geradas; eles estão no <code>.gitignore</code>.</p>
+<h2 id="13-abrir-pull-request-e-indicar-o-revisor">13. Abrir pull request e indicar o revisor</h2>
+<ol>
+<li>Abrir o repositório no GitHub.</li>
+<li>Clicar <strong>Compare &amp; pull request</strong>, ou <strong>Pull requests → New pull request</strong>.</li>
+<li>Selecionar <code>base: main</code> e a branch do exercício em <code>compare</code>.</li>
+<li>Conferir o diff e preencher título e descrição.</li>
+<li>Criar o PR pronto para revisão; usar draft se ainda estiver incompleto.</li>
+<li>Na área <strong>Reviewers</strong>, selecionar a pessoa revisora combinada com o instrutor. Ela precisa ter acesso apropriado ao repositório.</li>
+<li>Acompanhar os checks e responder aos comentários.</li>
+</ol>
+<p>Exemplo de descrição:</p>
+<pre class="hljs"><code><div>Valida que o formulário de login apresenta as mensagens de email e senha
+obrigatórios ao enviar os dois campos vazios.
+
+Alterações:
+- Localizadores e validação no LoginPage.
+- Cenário LOG-03 chamando os métodos da página.
+
+Validação:
+- npm run typecheck
+- Execução do LOG-03 no Chromium
+- Suíte completa nos três navegadores
+
+Informar os resultados reais e eventuais limitações.
+</div></code></pre>
+<p>O autor do PR não aprova o próprio PR. Se o campo Reviewers não permitir selecionar alguém, o instrutor deve conferir acesso e permissões. <a href="https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/approving-a-pull-request-with-required-reviews">Referência de aprovação</a>.</p>
+<h2 id="14-aprovação-automática-e-revisão-humana">14. Aprovação automática e revisão humana</h2>
+<h3 id="conferir-os-testes-no-github-actions">Conferir os testes no GitHub Actions</h3>
+<ol>
+<li>No PR, abrir a área de checks ou a aba <strong>Actions</strong> do repositório.</li>
+<li>Abrir <strong>Testes WEB - Playwright</strong> e conferir a execução referente ao último commit do PR.</li>
+<li>Conferir instalação, verificação de JavaScript e execução dos testes.</li>
+<li>Se falhar, abrir o log da etapa e baixar <code>playwright-results</code> quando disponível.</li>
+<li>Corrigir localmente, executar novamente, fazer novo commit e push na mesma branch. O PR é atualizado automaticamente.</li>
+</ol>
+<p>O workflow atual executa os três navegadores em push, pull request e execução manual. Na agenda, segunda-feira às 06:00 de São Paulo usa os três; terça a sexta às 06:00 usa somente Chromium. Não há execução agendada no fim de semana. Os artefatos ficam disponíveis por 14 dias.</p>
+<h3 id="checklist-da-pessoa-revisora">Checklist da pessoa revisora</h3>
+<ul>
+<li>O cenário tem objetivo e resultado esperado claros?</li>
+<li>Os elementos foram confirmados na tela e os localizadores são estáveis?</li>
+<li>O construtor concentra os localizadores e o teste chama os métodos da página?</li>
+<li>As ações têm <code>await</code> e as validações usam asserções adequadas?</li>
+<li>O cenário funciona isoladamente e não depende da ordem dos testes?</li>
+<li>Não foram incluídos <code>test.only</code>, pausas fixas ou alterações em dados de colegas?</li>
+<li>O diff contém apenas alterações necessárias ao cenário?</li>
+<li>Os checks do último commit passaram e falhas intermitentes foram analisadas?</li>
+</ul>
+<h3 id="registrar-a-revisão">Registrar a revisão</h3>
+<ol>
+<li>Abrir <strong>Files changed</strong> e ler as alterações.</li>
+<li>Adicionar comentários específicos, indicando problema e melhoria esperada.</li>
+<li>Clicar <strong>Review changes</strong> e escolher:
+<ul>
+<li><strong>Comment:</strong> registra observações sem aprovar.</li>
+<li><strong>Request changes:</strong> solicita correções.</li>
+<li><strong>Approve:</strong> aprova as alterações revisadas.</li>
+</ul>
+</li>
+<li>O autor corrige comentários na mesma branch e pede nova revisão.</li>
+<li>A pessoa revisora confere as mudanças e os checks mais recentes antes de aprovar.</li>
+</ol>
+<p>Teste verde significa que as verificações implementadas passaram. A revisão avalia também a qualidade e a cobertura. O merge depende das regras configuradas no repositório; a aprovação humana e o CI precisam estar de acordo.</p>
+<h2 id="15-configuração-de-aprovação-obrigatória--instrutor">15. Configuração de aprovação obrigatória — instrutor</h2>
+<p>Esta seção orienta o administrador do repositório. O workflow local não configura proteção de branch nem revisores automaticamente. A disponibilidade dos recursos depende do plano, da visibilidade do repositório e das permissões.</p>
+<p>Em <strong>Settings → Branches</strong> ou <strong>Settings → Rules → Rulesets</strong>, configurar uma regra para a branch padrão:</p>
+<ol>
+<li>Exigir pull request antes do merge.</li>
+<li>Exigir ao menos uma aprovação.</li>
+<li>Exigir resolução das conversas de revisão.</li>
+<li>Exigir status checks aprovados e selecionar o check real da execução de PR, exibido pelo job <strong>Chromium, Firefox e WebKit</strong>. Fazer uma primeira execução se o check ainda não estiver disponível para seleção.</li>
+<li>Configurar a invalidação de aprovações antigas após novos commits, se esse for o processo da turma.</li>
+<li>Conferir quem pode ignorar as regras e testar com um PR de exercício.</li>
+</ol>
+<p>Solicitar um revisor no PR indica quem deve avaliar; a regra de aprovação obrigatória é o que impede merge sem a revisão exigida. <a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches">Referência de proteção de branches</a>.</p>
+<p>Não usar o check da agenda reduzida de Chromium como substituto da execução de PR com os três navegadores.</p>
+<h2 id="16-fazer-merge-e-atualizar-a-máquina">16. Fazer merge e atualizar a máquina</h2>
+<p>Após aprovação e checks exigidos concluídos, a pessoa autorizada faz o merge conforme a política da equipe, por exemplo <strong>Squash and merge</strong>, e pode excluir a branch remota do exercício.</p>
+<p>Na máquina do participante, com o trabalho salvo:</p>
+<pre class="hljs"><code><div>git <span class="hljs-keyword">switch</span> main
+git pull <span class="hljs-literal">--ff-only</span> origin main
+npm ci
+npm run test:chromium
+</div></code></pre>
+<p>Se houver conflito, entender os dois lados da alteração, resolver na branch de trabalho e executar os testes novamente antes de solicitar aprovação.</p>
+<h2 id="17-critério-de-conclusão-da-atividade">17. Critério de conclusão da atividade</h2>
+<p>A atividade termina quando o participante apresenta o cenário no site, explica como encontrou os elementos, demonstra o teste aprovado, mostra o relatório e entrega um PR revisado com checks do último commit aprovados.</p>
+<p>Para a próxima atividade, escolher um cenário de cadastro ou recuperação no mapeamento, repetir o processo com um novo Page Object e trocar o papel de autor e revisor. Evitar criação de contas ou envio de emails até preparar dados e combinar a limpeza do ambiente.</p>
+
+</body>
+</html>

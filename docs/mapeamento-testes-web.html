@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>mapeamento-testes-web.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> or <div class="page"></div> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="mapeamento-de-testes-web--e-rotas">Mapeamento de testes WEB — E-Rotas</h1>
+<p>Aplicação: https://projeto-entra21.web.app/</p>
+<p>Exploração realizada em 12/11/2026, com Playwright e Chromium, sem autenticação.</p>
+<p>Este documento é um plano de testes, não um relatório de aprovação. As telas públicas foram acessadas e os formulários de autenticação foram submetidos vazios para observar validações. Na exploração dessas validações, requisições diferentes de GET, HEAD e OPTIONS foram bloqueadas. Não foram criadas contas, enviadas recuperações de senha ou alterados dados.</p>
+<h2 id="convenções">Convenções</h2>
+<ul>
+<li><strong>P0:</strong> acesso, sessão e autorização; executar antes de uma entrega.</li>
+<li><strong>P1:</strong> funcionalidades principais e validações; executar na regressão.</li>
+<li><strong>P2:</strong> usabilidade, apresentação e compatibilidade complementar.</li>
+<li><strong>Observado:</strong> elemento, navegação ou resposta identificados na exploração. Não significa que todas as variações do cenário foram executadas.</li>
+<li><strong>Proposto:</strong> comportamento a testar e alinhar com os requisitos; ainda não confirmado.</li>
+<li><strong>Dependente:</strong> exige credenciais, dados preparados ou acesso a serviço externo.</li>
+</ul>
+<h2 id="telas-e-elementos-observados">Telas e elementos observados</h2>
+<table>
+<thead>
+<tr>
+<th>Caminho</th>
+<th>Conteúdo observado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/</code></td>
+<td>Redirecionou para <code>/auth/login</code> sem sessão.</td>
+</tr>
+<tr>
+<td><code>/auth/login</code></td>
+<td>Título “Acessar E-Rotas”, Email, Senha, botão de visibilidade da senha, Lembrar-me, Login e links para recuperação, cadastro e rastreio.</td>
+</tr>
+<tr>
+<td><code>/auth/register</code></td>
+<td>Título “Registre-se”, Nome, Sobrenome, (DDD) Celular, Email, Senha, botão de visibilidade da senha, Registrar e link Login. Não foi observado seletor de perfil no cadastro público.</td>
+</tr>
+<tr>
+<td><code>/auth/reset-password</code></td>
+<td>Título “Esqueceu sua senha?”, Email, Enviar e Voltar.</td>
+</tr>
+<tr>
+<td><code>/rastreio</code></td>
+<td>Título “Rastrear encomenda”, campo com placeholder “Código de rastreio, ex.: ER7K2M9QXP4A”, Rastrear e link Entrar.</td>
+</tr>
+</tbody>
+</table>
+<p>Links de referência: <a href="https://projeto-entra21.web.app/auth/login">Login</a>, <a href="https://projeto-entra21.web.app/auth/register">Cadastro</a>, <a href="https://projeto-entra21.web.app/auth/reset-password">Recuperação</a>, <a href="https://projeto-entra21.web.app/rastreio">Rastreio</a>.</p>
+<h2 id="login">Login</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Prioridade</th>
+<th>Cenário / passos</th>
+<th>Resultado a verificar</th>
+<th>Base</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LOG-01</td>
+<td>P0</td>
+<td>Acessar <code>/</code> sem sessão.</td>
+<td>Navega para <code>/auth/login</code> e apresenta o formulário.</td>
+<td>Observado</td>
+</tr>
+<tr>
+<td>LOG-02</td>
+<td>P1</td>
+<td>Abrir login.</td>
+<td>Exibe título, campos, Lembrar-me e botão Login.</td>
+<td>Observado</td>
+</tr>
+<tr>
+<td>LOG-03</td>
+<td>P1</td>
+<td>Clicar Login com os dois campos vazios.</td>
+<td>Exibe “O email é obrigatório” e “A senha é obrigatória”.</td>
+<td>Observado</td>
+</tr>
+<tr>
+<td>LOG-04</td>
+<td>P1</td>
+<td>Preencher apenas um campo e enviar; repetir com o outro.</td>
+<td>Aponta o campo ausente; não autentica.</td>
+<td>Proposto</td>
+</tr>
+<tr>
+<td>LOG-05</td>
+<td>P1</td>
+<td>Informar email malformado.</td>
+<td>Rejeita o formato e informa como corrigir; confirmar texto da mensagem.</td>
+<td>Proposto</td>
+</tr>
+<tr>
+<td>LOG-06</td>
+<td>P1</td>
+<td>Digitar senha e alternar sua visibilidade.</td>
+<td>Inicia mascarada; alterna a exibição sem alterar o valor.</td>
+<td>Observado: campo password e botão; alternância a validar</td>
+</tr>
+<tr>
+<td>LOG-07</td>
+<td>P0</td>
+<td>Entrar com conta e senha válidas de cada perfil.</td>
+<td>Abre a área apropriada e identifica a sessão correta.</td>
+<td>Dependente</td>
+</tr>
+<tr>
+<td>LOG-08</td>
+<td>P0</td>
+<td>Enviar credenciais inválidas.</td>
+<td>Informa falha e mantém o usuário sem sessão.</td>
+<td>Dependente</td>
+</tr>
+<tr>
+<td>LOG-09</td>
+<td>P1</td>
+<td>Pressionar Enter após preencher credenciais.</td>
+<td>Submete uma única vez, conforme regra do formulário.</td>
+<td>Proposto</td>
+</tr>
+<tr>
+<td>LOG-10</td>
+<td>P1</td>
+<td>Marcar e desmarcar Lembrar-me; reabrir o navegador.</td>
+<td>Persistência da sessão segue a regra definida para cada opção.</td>
+<td>Dependente; regra a confirmar</td>
+</tr>
+<tr>
+<td>LOG-11</td>
+<td>P1</td>
+<td>Clicar Esqueceu a senha?, Crie uma conta e Rastrear encomenda.</td>
+<td>Abre, respectivamente, recuperação, cadastro e rastreio.</td>
+<td>Observado: destinos dos links</td>
+</tr>
+<tr>
+<td>LOG-12</td>
+<td>P1</td>
+<td>Submeter durante demora ou falha da autenticação.</td>
+<td>Indica processamento, evita envio duplicado e permite recuperação após erro.</td>
+<td>Proposto</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cadastro">Cadastro</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Prioridade</th>
+<th>Cenário / passos</th>
+<th>Resultado a verificar</th>
+<th>Base</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CAD-01</td>
+<td>P1</td>
+<td>Abrir <code>/auth/register</code>.</td>
+<td>Exibe os cinco campos e Registrar.</td>
+<td>Observado</td>
+</tr>
+<tr>
+<td>CAD-02</td>
+<td>P1</td>
+<td>Enviar formulário vazio.</td>
+<td>Exibe “O nome é obrigatório”, “O sobrenome é obrigatório”, “O telefone é obrigatório”, “O email é obrigatório” e “A senha é obrigatória”.</td>
+<td>Observado</td>
+</tr>
+<tr>
+<td>CAD-03</td>
+<td>P1</td>
+<td>Deixar um campo vazio por vez.</td>
+<td>Valida o campo ausente sem perder os demais valores.</td>
+<td>Proposto</td>
+</tr>
+<tr>
+<td>CAD-04</td>
+<td>P1</td>
+<td>Informar email malformado e corrigir.</td>
+<td>Rejeita formato inválido e remove o erro após a correção conforme comportamento definido.</td>
+<td>Proposto</td>
+</tr>
+<tr>
+<td>CAD-05</td>
+<td>P1</td>
+<td>Informar celular com DDD, letras, tamanho insuficiente e excesso de dígitos.</td>
+<td>Aplica máscara e validação conforme regra a confirmar.</td>
+<td>Proposto</td>
+</tr>
+<tr>
+<td>CAD-06</td>
+<td>P1</td>
+<td>Testar nomes com acentos, espaços e hífen, além de valores somente com espaços.</td>
+<td>Aceita nomes válidos e rejeita valores sem conteúdo conforme requisito.</td>
+<td>Proposto</td>
+</tr>
+<tr>
+<td>CAD-07</td>
+<td>P1</td>
+<td>Testar limites de senha e alternância de visibilidade.</td>
+<td>Aplica política de senha definida e preserva o valor ao alternar.</td>
+<td>Proposto; política não identificada</td>
+</tr>
+<tr>
+<td>CAD-08</td>
+<td>P0</td>
+<td>Registrar conta inédita com dados válidos.</td>
+<td>Cria uma única conta e apresenta confirmação ou navegação esperada.</td>
+<td>Dependente; cria dados</td>
+</tr>
+<tr>
+<td>CAD-09</td>
+<td>P1</td>
+<td>Tentar cadastrar email já existente.</td>
+<td>Trata duplicidade sem criar outra conta.</td>
+<td>Dependente</td>
+</tr>
+<tr>
+<td>CAD-10</td>
+<td>P1</td>
+<td>Clicar Registrar repetidamente ou simular indisponibilidade.</td>
+<td>Evita duplicidade e apresenta erro recuperável.</td>
+<td>Proposto</td>
+</tr>
+<tr>
+<td>CAD-11</td>
+<td>P1</td>
+<td>Clicar Login.</td>
+<td>Retorna para <code>/auth/login</code>.</td>
+<td>Observado: destino do link</td>
+</tr>
+</tbody>
+</table>
+<h2 id="recuperação-de-senha">Recuperação de senha</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Prioridade</th>
+<th>Cenário / passos</th>
+<th>Resultado a verificar</th>
+<th>Base</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REC-01</td>
+<td>P1</td>
+<td>Abrir a recuperação.</td>
+<td>Exibe explicação, Email, Enviar e Voltar.</td>
+<td>Observado</td>
+</tr>
+<tr>
+<td>REC-02</td>
+<td>P1</td>
+<td>Clicar Enviar sem email.</td>
+<td>Exibe “O email é obrigatório”.</td>
+<td>Observado</td>
+</tr>
+<tr>
+<td>REC-03</td>
+<td>P1</td>
+<td>Enviar email malformado.</td>
+<td>Aponta formato inválido sem iniciar recuperação.</td>
+<td>Proposto</td>
+</tr>
+<tr>
+<td>REC-04</td>
+<td>P0</td>
+<td>Solicitar recuperação para conta de teste existente.</td>
+<td>Apresenta retorno adequado e entrega link na caixa de testes.</td>
+<td>Dependente; envia email</td>
+</tr>
+<tr>
+<td>REC-05</td>
+<td>P1</td>
+<td>Solicitar recuperação para email não cadastrado.</td>
+<td>Retorno segue a regra de privacidade definida, sem revelar cadastro indevidamente.</td>
+<td>Dependente; regra a confirmar</td>
+</tr>
+<tr>
+<td>REC-06</td>
+<td>P0</td>
+<td>Abrir link válido e definir nova senha.</td>
+<td>Nova senha autentica; senha anterior deixa de autenticar.</td>
+<td>Dependente; altera credencial</td>
+</tr>
+<tr>
+<td>REC-07</td>
+<td>P0</td>
+<td>Usar link expirado, adulterado ou já utilizado.</td>
+<td>Rejeita o link e orienta a solicitar outro.</td>
+<td>Dependente</td>
+</tr>
+<tr>
+<td>REC-08</td>
+<td>P1</td>
+<td>Clicar Voltar.</td>
+<td>Retorna para <code>/auth/login</code>.</td>
+<td>Observado: destino do link</td>
+</tr>
+</tbody>
+</table>
+<h2 id="rastreio-público">Rastreio público</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Prioridade</th>
+<th>Cenário / passos</th>
+<th>Resultado a verificar</th>
+<th>Base</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RAS-01</td>
+<td>P1</td>
+<td>Abrir <code>/rastreio</code> sem autenticação.</td>
+<td>Exibe título, campo de código, Rastrear e Entrar.</td>
+<td>Observado</td>
+</tr>
+<tr>
+<td>RAS-02</td>
+<td>P1</td>
+<td>Enviar código vazio ou somente espaços.</td>
+<td>Não realiza consulta útil; confirmar regra e feedback esperado. Na submissão vazia explorada não apareceu mensagem textual de validação.</td>
+<td>Proposto; observação registrada</td>
+</tr>
+<tr>
+<td>RAS-03</td>
+<td>P1</td>
+<td>Consultar código com formato inválido.</td>
+<td>Informa erro compreensível sem quebrar a tela.</td>
+<td>Proposto</td>
+</tr>
+<tr>
+<td>RAS-04</td>
+<td>P1</td>
+<td>Consultar código bem formado inexistente.</td>
+<td>Apresenta estado de encomenda não encontrada.</td>
+<td>Dependente</td>
+</tr>
+<tr>
+<td>RAS-05</td>
+<td>P0</td>
+<td>Consultar código válido de encomenda preparada.</td>
+<td>Exibe os dados e o estado correspondentes à encomenda.</td>
+<td>Dependente</td>
+</tr>
+<tr>
+<td>RAS-06</td>
+<td>P1</td>
+<td>Consultar códigos de encomendas em estados diferentes.</td>
+<td>Apresenta cada estado e histórico conforme dados preparados. Estados disponíveis ainda não mapeados.</td>
+<td>Dependente</td>
+</tr>
+<tr>
+<td>RAS-07</td>
+<td>P1</td>
+<td>Testar espaços antes/depois e letras minúsculas no código.</td>
+<td>Normaliza ou rejeita conforme regra a confirmar.</td>
+<td>Proposto</td>
+</tr>
+<tr>
+<td>RAS-08</td>
+<td>P1</td>
+<td>Consultar outro código após resultado ou erro.</td>
+<td>Atualiza a tela sem misturar dados da consulta anterior.</td>
+<td>Dependente</td>
+</tr>
+<tr>
+<td>RAS-09</td>
+<td>P0</td>
+<td>Examinar informações do resultado público.</td>
+<td>Expõe somente os dados autorizados para consulta sem sessão.</td>
+<td>Dependente; campos públicos a confirmar</td>
+</tr>
+<tr>
+<td>RAS-10</td>
+<td>P1</td>
+<td>Clicar Entrar.</td>
+<td>Abre <code>/auth/login</code>.</td>
+<td>Observado: destino do link</td>
+</tr>
+</tbody>
+</table>
+<p>O código no placeholder é um exemplo de formato; não foi confirmado como encomenda existente.</p>
+<h2 id="sessão-e-perfis--pendente-de-exploração-autenticada">Sessão e perfis — pendente de exploração autenticada</h2>
+<p>Há três contas de teste declaradas em <code>Helpers/environment.js</code>. A existência das contas no servidor, suas senhas e permissões ainda precisam ser confirmadas. Não foram presumidos menus ou caminhos internos.</p>
+<table>
+<thead>
+<tr>
+<th>Perfil declarado</th>
+<th>Email</th>
+<th>Variável de senha</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Usuário</td>
+<td><code>qa.usuario@example.com</code></td>
+<td><code>QA_USER_PASSWORD</code></td>
+</tr>
+<tr>
+<td>Motorista</td>
+<td><code>qa.motorista@example.com</code></td>
+<td><code>QA_DRIVER_PASSWORD</code></td>
+</tr>
+<tr>
+<td>Administrador</td>
+<td><code>qa.admin@example.com</code></td>
+<td><code>QA_ADMIN_PASSWORD</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Prioridade</th>
+<th>Cenário</th>
+<th>Resultado a verificar</th>
+<th>Pré-condição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SES-01</td>
+<td>P0</td>
+<td>Autenticar cada perfil e listar menus, telas e ações disponíveis.</td>
+<td>Inventário de permissões validado com as regras do sistema.</td>
+<td>Contas válidas e matriz de permissões</td>
+</tr>
+<tr>
+<td>SES-02</td>
+<td>P0</td>
+<td>Abrir URL interna conhecida sem sessão.</td>
+<td>Bloqueia acesso ou redireciona para login.</td>
+<td>Descobrir rotas internas</td>
+</tr>
+<tr>
+<td>SES-03</td>
+<td>P0</td>
+<td>Abrir tela restrita com perfil sem permissão.</td>
+<td>Nega acesso, inclusive por navegação direta.</td>
+<td>Matriz de permissões e contas</td>
+</tr>
+<tr>
+<td>SES-04</td>
+<td>P0</td>
+<td>Encerrar sessão e tentar retornar com Voltar ou URL direta.</td>
+<td>Não recupera acesso autenticado.</td>
+<td>Localizar ação de saída</td>
+</tr>
+<tr>
+<td>SES-05</td>
+<td>P1</td>
+<td>Recarregar tela autenticada e abrir nova aba.</td>
+<td>Mantém ou encerra sessão conforme regra definida.</td>
+<td>Sessão válida</td>
+</tr>
+<tr>
+<td>SES-06</td>
+<td>P0</td>
+<td>Expirar sessão durante navegação ou ação.</td>
+<td>Trata expiração e impede operações sem autorização.</td>
+<td>Controle da expiração em ambiente de teste</td>
+</tr>
+<tr>
+<td>SES-07</td>
+<td>P0</td>
+<td>Comparar acesso a dados de contas diferentes.</td>
+<td>Impede acesso indevido a dados de outro usuário.</td>
+<td>Contas e registros isolados</td>
+</tr>
+</tbody>
+</table>
+<p>Após autenticar, complementar este documento com os nomes reais dos módulos, URLs, campos, regras e cenários de criação, consulta, edição e exclusão que de fato existirem.</p>
+<h2 id="cenários-transversais">Cenários transversais</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Prioridade</th>
+<th>Verificação</th>
+<th>Resultado a verificar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TRA-01</td>
+<td>P1</td>
+<td>Executar fluxos em Chromium, Firefox e WebKit.</td>
+<td>Comportamento funcional equivalente.</td>
+</tr>
+<tr>
+<td>TRA-02</td>
+<td>P1</td>
+<td>Abrir telas em viewport de celular e desktop.</td>
+<td>Campos e botões utilizáveis, sem sobreposição ou rolagem horizontal indevida.</td>
+</tr>
+<tr>
+<td>TRA-03</td>
+<td>P1</td>
+<td>Navegar com Tab, Shift+Tab, Enter e Espaço.</td>
+<td>Ordem de foco coerente, foco visível e controles operáveis.</td>
+</tr>
+<tr>
+<td>TRA-04</td>
+<td>P1</td>
+<td>Verificar nomes acessíveis de campos e botões, inclusive ícone de senha.</td>
+<td>Controles identificáveis por tecnologias assistivas. Na exploração, os botões de ícone de senha não tinham <code>aria-label</code> nem <code>title</code>; verificar o nome acessível completo antes de concluir defeito.</td>
+</tr>
+<tr>
+<td>TRA-05</td>
+<td>P1</td>
+<td>Corrigir campos após erros de validação.</td>
+<td>Mensagens claras, vinculadas ao campo e atualizadas após correção.</td>
+</tr>
+<tr>
+<td>TRA-06</td>
+<td>P1</td>
+<td>Simular falhas de rede e respostas lentas nas chamadas identificadas.</td>
+<td>Feedback adequado e possibilidade de tentar novamente.</td>
+</tr>
+<tr>
+<td>TRA-07</td>
+<td>P2</td>
+<td>Recarregar e navegar pelo histórico nas rotas públicas.</td>
+<td>Tela correta, sem erro de hospedagem ou estado inconsistente.</td>
+</tr>
+<tr>
+<td>TRA-08</td>
+<td>P2</td>
+<td>Acompanhar erros de console e requisições da aplicação nos fluxos.</td>
+<td>Identificar erros funcionais; avaliar chamadas externas separadamente.</td>
+</tr>
+<tr>
+<td>TRA-09</td>
+<td>P1</td>
+<td>Examinar relatórios, logs e capturas dos testes autenticados.</td>
+<td>Não expor senhas, tokens ou dados pessoais desnecessários nos artefatos compartilhados.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="organização-sugerida-para-automação">Organização sugerida para automação</h2>
+<p>Manter JavaScript e o padrão já adotado: localizadores no <code>constructor(page)</code>, ações e validações no Page Object e cenários nos arquivos <code>.spec.js</code>.</p>
+<pre class="hljs"><code><div>Helpers/environment.js
+page/
+  Login/LoginPage.js                  # existente
+  Cadastro/CadastroPage.js            # a criar
+  Recuperacao/RecuperacaoPage.js      # a criar
+  Rastreio/RastreioPage.js            # a criar
+tests/
+  Login/login.spec.js                 # existente
+  Cadastro/cadastro.spec.js           # a criar
+  Recuperacao/recuperacao.spec.js      # a criar
+  Rastreio/rastreio.spec.js            # a criar
+  Sessao/sessao.spec.js               # após explorar acesso autenticado
+</div></code></pre>
+<p>Os testes atuais de login verificam a apresentação da tela e o preenchimento com senha mascarada, sem enviar credenciais. Os exemplos locais de rotas e health check não representam funcionalidades observadas no site das aulas.</p>
+<h2 id="sequência-sugerida-para-as-aulas">Sequência sugerida para as aulas</h2>
+<ol>
+<li>Navegação e asserções: LOG-01, LOG-02, CAD-01, REC-01 e RAS-01.</li>
+<li>Page Objects com construtor: separar localizadores, ações e validações.</li>
+<li>Formulários e erros: LOG-03, CAD-02 e REC-02; depois explorar formatos inválidos.</li>
+<li>Navegação entre telas e senha mascarada: LOG-06, LOG-11, CAD-11 e REC-08.</li>
+<li>Dados de teste: usar <code>ACCOUNTS</code>, preparar códigos de rastreio e isolar registros.</li>
+<li>Autenticação, sessão e permissões: executar somente após confirmar credenciais e regras.</li>
+<li>Interceptação de rede, responsividade, acessibilidade, relatórios e execução no CI.</li>
+</ol>
+<p>Para cenários que criam contas ou alteram senhas, usar dados exclusivos e definir limpeza e restauração. Guardar valores de senha no <code>.env</code> ou no ambiente do CI; <code>passwordEnv</code> contém o nome da variável, não a senha.</p>
+
+</body>
+</html>

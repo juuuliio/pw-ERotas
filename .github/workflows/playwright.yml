@@ -1,0 +1,56 @@
+name: Testes WEB - Playwright
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    # 09:00 UTC = 06:00 em America/Sao_Paulo (UTC-3).
+    - cron: '0 9 * * 1'
+    - cron: '0 9 * * 2-5'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: playwright-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: ${{ github.event.schedule == '0 9 * * 2-5' && 'Chromium' || 'Chromium, Firefox e WebKit' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CI: 'true'
+      BASE_URL: https://projeto-entra21.web.app/
+      BROWSERS: ${{ github.event.schedule == '0 9 * * 2-5' && 'chromium' || 'chromium firefox webkit' }}
+    steps:
+      - name: Baixar o projeto
+        uses: actions/checkout@v6
+      - name: Configurar Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - name: Instalar dependências
+        run: npm ci
+      - name: Instalar navegadores e dependências do Linux
+        run: npx playwright install --with-deps $BROWSERS
+      - name: Verificar JavaScript e JSDoc
+        run: npm run typecheck
+      - name: Executar testes nos três navegadores
+        if: github.event.schedule != '0 9 * * 2-5'
+        run: npm test
+      - name: Executar testes somente no Chromium
+        if: github.event.schedule == '0 9 * * 2-5'
+        run: npm run test:chromium
+      - name: Publicar relatórios e evidências
+        uses: actions/upload-artifact@v5
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-results
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14
+          if-no-files-found: warn
